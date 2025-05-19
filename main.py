@@ -12,6 +12,10 @@ class Student(Person):
         self.id = id
         self.house = house
         self.subjects = []
+        people[id] = {
+            "fname": fname,
+            "lname": lname
+        }
     
     def enrolClass(self, subject):
         if subject not in subjects:
@@ -42,6 +46,10 @@ class Teacher(Person):
         super().__init__(fname, lname)
         self.id = id
         self.subjects = []
+        people[id] = {
+            "fname": fname,
+            "lname": lname
+        }
     
     def enrolClass(self, subject):
         if subject not in subjects:
@@ -67,6 +75,7 @@ def addSubject(subject):
     }
 
 subjects = {}
+people = {}
 
 israel = Student("Israel", "Irawan", 1234, "Johnson")
 israel.enrolClass("Math")
