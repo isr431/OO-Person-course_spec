@@ -26,21 +26,6 @@ class Student(Person):
 
         for subject in self.subjects:
             print("-", subject)
-    
-    def run(self):
-        while True:
-            mode = input("Would you like to display all subjects or enrol in a class (display/enrol/exit): ").lower()
-
-            if mode == "display":
-                self.displaySubjects()
-            elif mode == "enrol":
-                subject = input("Enter subject: ").lower()
-                self.enrolClass(subject)
-                print(f"Student successfully enrolled in {subject}.")
-            elif mode == "exit":
-                break
-            else:
-                print("Invalid mode.")
 
 class Parent(Person):
     def __init__(self, fname, lname, *children: Student):
@@ -52,6 +37,17 @@ class Parent(Person):
 
         for child in self.children:
             print("-", child)
+
+class Teacher(Person):
+    def __init__(self, fname, lname, *subjects):
+        super().__init__(fname, lname)
+        self.subjects = list(subjects)
+    
+    def displaySubjects(self):
+        print("Subjects:")
+
+        for subject in self.subjects:
+            print("-", subject)
 
 def printStudentList(subject):
     print(f"Students: {', '.join(str(student) for student in subjects[subject])}")
