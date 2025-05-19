@@ -1,3 +1,5 @@
+import random
+
 class Person:
     def __init__(self, fname, lname):
         self.fname = fname
@@ -12,16 +14,14 @@ class Student(Person):
         self.id = id
         self.house = house
         self.subjects = []
-        people[id] = {
-            "fname": fname,
-            "lname": lname
-        }
+        people[id] = self
     
     def enrolClass(self, subject):
         if subject not in subjects:
             addSubject(subject)
 
         subjects[subject]["students"].append(self.id)
+        subjects[subject]["classSize"] += 1
         self.subjects.append(subject)
     
     def displaySubjects(self):
@@ -46,10 +46,7 @@ class Teacher(Person):
         super().__init__(fname, lname)
         self.id = id
         self.subjects = []
-        people[id] = {
-            "fname": fname,
-            "lname": lname
-        }
+        people[id] = self
     
     def enrolClass(self, subject):
         if subject not in subjects:
@@ -74,10 +71,17 @@ def addSubject(subject):
         "classSize": 0
     }
 
+def createID():
+    while True:
+        id = random.randint(10000000, 99999999)
+
+        if id not in people:
+            return id
+
 subjects = {}
 people = {}
 
-israel = Student("Israel", "Irawan", 1234, "Johnson")
+israel = Student("Israel", "Irawan", createID(), "Johnson")
 israel.enrolClass("Math")
 israel.enrolClass("English")
 israel.enrolClass("Software Engineering")
@@ -85,3 +89,6 @@ israel.enrolClass("Legal Studies")
 israel.enrolClass("Enterprise Computing")
 israel.enrolClass("Studies of Religion")
 israel.displaySubjects()
+
+print(people)
+print(subjects)
