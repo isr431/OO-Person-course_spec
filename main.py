@@ -14,11 +14,10 @@ class Student(Person):
         self.subjects = []
     
     def enrolClass(self, subject):
-        if subject in subjects:
-            subjects[subject].append(self.id)
-        else:
-            subjects[subject] = [self.id]
-        
+        if subject not in subjects:
+            addSubject(subject)
+
+        subjects[subject]["students"].append(self.id)
         self.subjects.append(subject)
     
     def displaySubjects(self):
@@ -39,9 +38,17 @@ class Parent(Person):
             print("-", child)
 
 class Teacher(Person):
-    def __init__(self, fname, lname, *subjects):
+    def __init__(self, fname, lname, id):
         super().__init__(fname, lname)
-        self.subjects = list(subjects)
+        self.id = id
+        self.subjects = []
+    
+    def enrolClass(self, subject):
+        if subject not in subjects:
+            addSubject(subject)
+        
+        subjects[subject]["teacher"] = id
+        self.subjects.append(subject)
     
     def displaySubjects(self):
         print("Subjects:")
@@ -50,7 +57,14 @@ class Teacher(Person):
             print("-", subject)
 
 def printStudentList(subject):
-    print(f"Students: {', '.join(str(student) for student in subjects[subject])}")
+    print(f"Students: {', '.join(str(student) for student in subjects[subject]["students"])}")
+
+def addSubject(subject):
+    subjects[subject] = {
+        "teacher": "",
+        "students": [],
+        "classSize": 0
+    }
 
 subjects = {}
 
